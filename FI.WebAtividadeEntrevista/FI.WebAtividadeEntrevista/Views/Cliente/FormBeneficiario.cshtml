@@ -1,0 +1,82 @@
+﻿@model List<WebAtividadeEntrevista.Models.BeneficiarioModel>
+
+@{ 
+    var Model = (List<WebAtividadeEntrevista.Models.BeneficiarioModel>)ViewBag.beneficiarios;
+    var idlinha="";
+}
+
+    <form id="formCadastroBenef" name="formCadastroBenef" method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="CPF">CPF:</label>
+                    <input required="required" type="text" class="form-control" id="cpfBeneficiario" name="cpfBeneficiario" placeholder="Ex: 999.999.999-99" maxlength="14" onfocus="formataCPF(this)">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Nome">Nome:</label>
+                    <input required="required" type="text" class="form-control" id="NomeBeneficiario" name="NomeBeneficiario" placeholder="Ex.: João" maxlength="50">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="vazio">&nbsp;&nbsp;</label>
+                    <button type="button" class="btn btn-sm btn-success" onclick="Save()">Incluir</button>
+                </div>
+            </div>
+        </div>
+        <input type="hidden"  id="indexBeneficiario" name="indexBeneficiario" value="">
+    </form>
+<table id="gridBeneficiarios" class="table">
+    <thead>
+        <tr>
+            <th style="visibility:hidden">
+                Id
+            </th>
+            <th>
+                CPF
+            </th>
+            <th>
+                Nome
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            idlinha = "tablerow" + @i;
+            <tr id=@idlinha>
+                <td style="visibility:hidden"> 
+                    @Model[i].Id
+                </td>
+                <td>
+                    @Model[i].CPF
+                </td>
+                <td>
+                    @Model[i].Nome
+                </td>
+                <td>
+                    <button onclick="Edit(@i)" type="button" class="btn btn-sm btn-primary">Alterar</button>
+                </td>
+                <td>
+                    <button onclick="Remove(@i)" type="button" class="btn btn-sm btn-primary">Excluir</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function Envia() {
+        $("#formCadastroBenef").validate();
+
+        //frm = document.getElementById("formCadastroBenef");
+        //frm.validate();
+        if ($("#formCadastroBenef").valid()) {
+            window.location.href = urlInclusao
+        }
+    }
+</script>
